@@ -1,0 +1,6 @@
+{
+	"authorUrl" : "http://192.168.42.23:4502",
+	"publishUrl" : "http://192.168.42.23:4503",
+	"testUser" : "admin",
+	"testPassword" : "admin"
+}
