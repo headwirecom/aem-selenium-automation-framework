@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.After;
 import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class DefaultComponentBase extends TestBase {
 	
@@ -23,6 +25,7 @@ public class DefaultComponentBase extends TestBase {
 	public void startDriver() throws ClientProtocolException, IOException {
 		ACTIONS.createPage(TEST_PAGE_NAME, TEST_PAGE_PARENT, TEST_PAGE_TEMPLATE, environment);
 		driver.get(environment.getAuthorUrl()+AEM_6_EDITOR+TEST_PAGE);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ContentFrame")));
 	}
 	
 	

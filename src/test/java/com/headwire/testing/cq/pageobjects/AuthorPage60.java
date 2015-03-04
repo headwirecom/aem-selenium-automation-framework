@@ -87,11 +87,12 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 	}
 
 	public AuthorPage selectSidePanelTab(String tabName) {
-		wait.until(ExpectedConditions.visibilityOfAllElements(sidePanelTabs));
+		
+//		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='js-sidePanel-edit coralTabPanel']/nav/a")));
 		for (WebElement el : sidePanelTabs) {
 			if (el.getText().equals(tabName)) {
 				el.click();
-				return new AuthorPage61(driver, wait);
+				return new AuthorPage60(driver, wait);
 			}
 		}
 		return this;
@@ -208,6 +209,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 		}
 		((Locatable) element).getCoordinates().inViewPort();
 		WebElement parsys = null;
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@data-path, '"+parsysName+"')]")));
 		dropTargets = driver.findElements(By.xpath("//*[@id='OverlayWrapper']/div/div")); //.findElements(By.xpath("//div[@class='cq-droptarget']"));
 		for (WebElement el : dropTargets) {
 			if (el.getAttribute("data-path") != null) {
@@ -220,7 +222,6 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 
 		elText = element.findElement(By.tagName("div"));
 		wait.until(ExpectedConditions.visibilityOf(elText));
-		wait.until(ExpectedConditions.visibilityOf(parsys));
 		boolean dragSuccess = ACTIONS.dragDropAsset(driver, wait, element, parsys);
 		Assert.assertTrue("Failed to drag and drop "+elText.getText(), dragSuccess);
 	}

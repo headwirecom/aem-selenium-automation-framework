@@ -32,10 +32,10 @@ public class TestBase {
 		driver = new FirefoxDriver();
 //                new URL("http://192.168.42.17:4444/wd/hub"), 
 //                capabilities);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get(environment.getAuthorUrl());
-		wait = new WebDriverWait(driver, 20);	
+		wait = new WebDriverWait(driver, 8);	
 		LoginPage loginPage = FactoryProducer.getPageFactory().getLoginPage(driver, wait, environment.getVersion());
 		loginPage.loginAs(environment.getTestUser(), environment.getTestPassword());
 	}
