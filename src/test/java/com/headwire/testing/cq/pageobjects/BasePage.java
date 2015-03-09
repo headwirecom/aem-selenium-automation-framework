@@ -29,6 +29,7 @@ public class BasePage {
 	public void assertExists(By by) {
 		WebElement el = null;
 		try {
+			wait.until(ExpectedConditions.presenceOfElementLocated(by));
 			el = driver.findElement(by);
 		} catch (Exception e) {
 			
@@ -96,7 +97,7 @@ public class BasePage {
 	 * Tests the breadcrumb of a page to validate it matches the content hierarchy
 	 */
 	public void validateBreadcrumbs() {
-		List<WebElement> breadcrumbLinks = driver.findElements(By.xpath("//div[contains(@class,'breadcrumb')]/a"));
+		List<WebElement> breadcrumbLinks = driver.findElements(By.xpath("//*[contains(@class,'breadcrumb')]//a"));
 		String[] parentPages = driver.getCurrentUrl().split("/");
 		int breadcrumbLinkCount = 0;
 		List<String> missingLinks = new ArrayList<String>();

@@ -71,7 +71,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 	protected List<WebElement> componentCards;
 	@FindBy(className = "cq-droptarget")
 	protected List<WebElement> dropTargets;
-	@FindBy(xpath = "//span[text()='Add Item']")
+	@FindBy(xpath = "//i[contains(@class,'coral-Icon--addCircle')]")
 	protected WebElement addItemButton;
 
 
@@ -88,7 +88,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 
 	public AuthorPage selectSidePanelTab(String tabName) {
 		
-//		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='js-sidePanel-edit coralTabPanel']/nav/a")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='coral-TabPanel-tab' and text()='"+tabName+"']")));
 		for (WebElement el : sidePanelTabs) {
 			if (el.getText().equals(tabName)) {
 				el.click();
@@ -100,7 +100,9 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 
 	public void selectDialogTab(String tabName) {
 		driver.switchTo().activeElement();
-		List<WebElement> dialogTabs = driver.findElements(By.xpath("//nav[@class='coral-TabPanel-navigation']/a"));
+		By tabBy = By.xpath("//nav[@class='coral-TabPanel-navigation']/a");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(tabBy));
+		List<WebElement> dialogTabs = driver.findElements(tabBy);
 		for (WebElement el : dialogTabs) {
 			if (el.getText().toLowerCase().equals(tabName.toLowerCase())) {
 				el.click();
@@ -285,18 +287,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 
 	public void editComponent(String componentName) {
 		if (driver.getCurrentUrl().contains(CLASSIC_EDITOR)) {
-			try {
-				By editBy = By.xpath("//div[text()='"+componentName+"']/../../td/table/tbody/tr/td/em/button[text()='Edit']");
-				wait.until(ExpectedConditions.presenceOfElementLocated(editBy));
-				WebElement editElement = driver.findElement(editBy);
-				wait.until(ExpectedConditions.visibilityOf(editElement));
-				editElement.click();
-			} catch (NoSuchElementException e) {
-				WebElement component = driver.findElement(By.className(componentName));
-				ACTIONS.doubleClick(driver, component);
-			}
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("x-window-mc")));
-			driver.switchTo().activeElement();
+			editComponentClassicUI(componentName);
 		} else {
 			try {
 				driver.switchTo().activeElement();
@@ -304,25 +295,46 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 				wait.until(ExpectedConditions.presenceOfElementLocated(by));
 				WebElement el = driver.findElement(by);
 				try {
-					el.click();
-					el.click();
-					el.click();
-					List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
-					for (WebElement el2 : editBarOptions) {
-						String actionAttrib = el2.getAttribute("data-action");
-						if (actionAttrib != null) {
-							if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
-								el2.click();
+					if (componentName.equals("title")) {
+						ACTIONS.doubleClick(driver, el);
+					} else {
+						el.click();
+						el.click();
+						el.click();
+						List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
+						for (WebElement el2 : editBarOptions) {
+							String actionAttrib = el2.getAttribute("data-action");
+							if (actionAttrib != null) {
+								if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
+									el2.click();
+								}
 							}
-						}
+						} 
 					}
 				} catch (Exception e) {
 					ACTIONS.doubleClick(driver, el);
-				}
+				}  
+					
+				
 			} catch (NoSuchElementException e) {
 				Assert.fail("Failed to find component to drag and drop "+componentName+". Error: "+e.getMessage());
 			}
 		}
+	}
+	
+	private void editComponentClassicUI(String componentName) {
+		try {
+			By editBy = By.xpath("//div[text()='"+componentName+"']/../../td/table/tbody/tr/td/em/button[text()='Edit']");
+			wait.until(ExpectedConditions.presenceOfElementLocated(editBy));
+			WebElement editElement = driver.findElement(editBy);
+			wait.until(ExpectedConditions.visibilityOf(editElement));
+			editElement.click();
+		} catch (NoSuchElementException e) {
+			WebElement component = driver.findElement(By.className(componentName));
+			ACTIONS.doubleClick(driver, component);
+		}
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("x-window-mc")));
+		driver.switchTo().activeElement();
 	}
 
 	public void selectInlineEditor(String type) {
@@ -571,6 +583,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 	}
 
 	public AuthorPage addTabs(int numberOfTabs) {
+		wait.until(ExpectedConditions.elementToBeClickable(addItemButton));
 		for (int i=0; i<numberOfTabs; i++) {
 			addItemButton.click();
 		}
@@ -581,6 +594,14 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 		List<WebElement> elements = driver.findElements(By.name(fieldName));
 		for (int i=0; i<elements.size(); i++) {
 			elements.get(i).sendKeys(prefix+i);
+		}
+		return this;
+	}
+	
+	public AuthorPage fillInMultipleFields(String fieldName, String[] values) {
+		List<WebElement> elements = driver.findElements(By.name(fieldName));
+		for (int i=0; i<elements.size(); i++) {
+			elements.get(i).sendKeys(values[i]);
 		}
 		return this;
 	}

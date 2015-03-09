@@ -28,7 +28,6 @@ public class DefaultComponentBase extends TestBase {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ContentFrame")));
 	}
 	
-	
 	@After
 	public void closeDriver() throws ClientProtocolException, IOException {
 		ACTIONS.deletePage(TEST_PAGE.replace(".html", ""), environment);

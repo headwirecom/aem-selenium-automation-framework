@@ -359,6 +359,15 @@ public interface AuthorPage {
 	 * @return The active AuthorPage object
 	 */
 	public AuthorPage fillInMultipleFields(String fieldName, String prefix);
+	
+	/**
+	 * Inputs text into multiple fields in CQ multiset fields 
+	 * 
+	 * @param fieldName The name of each individual field
+	 * @param values    An array of values to use for dialog input
+	 * @return The active AuthorPage object
+	 */
+	public AuthorPage fillInMultipleFields(String fieldName, String[] values);
 
 	/**
 	 * Selects dropdown value in x-tab panels
