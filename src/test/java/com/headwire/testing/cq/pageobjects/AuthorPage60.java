@@ -100,14 +100,9 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 
 	public void selectDialogTab(String tabName) {
 		driver.switchTo().activeElement();
-		By tabBy = By.xpath("//nav[@class='coral-TabPanel-navigation']/a");
+		By tabBy = By.xpath("//nav[@class='coral-TabPanel-navigation']/a[text()='"+tabName+"']");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(tabBy));
-		List<WebElement> dialogTabs = driver.findElements(tabBy);
-		for (WebElement el : dialogTabs) {
-			if (el.getText().toLowerCase().equals(tabName.toLowerCase())) {
-				el.click();
-			}
-		}
+		driver.findElement(tabBy).click();
 	}
 
 	public void selectDialogTabX(String tabName) {
@@ -170,6 +165,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 			WebElement parsys = driver.findElement(By.className(parsysName));
 			ACTIONS.dragDrop(driver, wait, element, parsys);   
 		} else {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("card-component")));
 			componentCards = driver.findElements(By.className("card-component")); 
 			WebElement element = null;
 			WebElement elText = null;
@@ -179,6 +175,9 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 					element = el;
 					break;
 				}
+			}
+			if (element == null) {
+				Assert.fail(componentName+" not found in sidepanel.");
 			}
 			((Locatable) element).getCoordinates().inViewPort();
 			WebElement parsys = null;
@@ -199,6 +198,7 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 	}
 
 	public void dragAssetIntoParsys(String assetPath, String parsysName) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//article[@data-path='"+assetPath+"']")));
 		List<WebElement> assetCards = driver.findElements(By.className("card-asset")); 
 		WebElement element = null;
 		WebElement elText = null;
@@ -293,6 +293,48 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 				driver.switchTo().activeElement();
 				By by = By.xpath("//div[contains(@data-path,'/"+componentName+"')]");
 				wait.until(ExpectedConditions.presenceOfElementLocated(by));
+				WebElement el = driver.findElement(by);
+				try {
+					if (componentName.equals("title")) {
+						ACTIONS.doubleClick(driver, el);
+					} else {
+						el.click();
+						el.click();
+						el.click();
+						List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
+						for (WebElement el2 : editBarOptions) {
+							String actionAttrib = el2.getAttribute("data-action");
+							if (actionAttrib != null) {
+								if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
+									el2.click();
+								}
+							}
+						} 
+					}
+				} catch (Exception e) {
+					ACTIONS.doubleClick(driver, el);
+				}  
+					
+				
+			} catch (NoSuchElementException e) {
+				Assert.fail("Failed to find component to drag and drop "+componentName+". Error: "+e.getMessage());
+			}
+		}
+	}
+	
+	public void editComponent(String componentName, int location) {
+		if (driver.getCurrentUrl().contains(CLASSIC_EDITOR)) {
+			editComponentClassicUI(componentName);
+		} else {
+			try {
+				driver.switchTo().activeElement();
+				By by = By.xpath("//div[contains(@data-path,'/"+componentName+"')]");
+				wait.until(ExpectedConditions.presenceOfElementLocated(by));
+				int numberOfElements = driver.findElements(by).size();
+				if (location > numberOfElements) {
+					location = numberOfElements;
+				}
+				by = By.xpath("(//div[contains(@data-path,'/"+componentName+"')])["+location+"]");
 				WebElement el = driver.findElement(by);
 				try {
 					if (componentName.equals("title")) {
@@ -618,6 +660,15 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 				break;
 			}
 		}
+	}
+	
+	public void waitForRefresh() {
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			// swallow
+		}
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ContentFrame")));
 	}
 
 }

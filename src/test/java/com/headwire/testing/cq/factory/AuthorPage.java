@@ -157,6 +157,15 @@ public interface AuthorPage {
 	 * @throws Exception
 	 */
 	public void editComponent(String componentName);
+	
+	/**
+	 * Opens the edit dialog for the specified component
+	 * @param componentName The crx name of the component to edit
+	 * @param location The numerical value of which component to select
+	 * 					when multiple of the same component exist
+	 * @throws Exception
+	 */
+	public void editComponent(String componentName, int location);
 
 	/**
 	 * Helper method for AEM 6.1 text component
@@ -446,5 +455,11 @@ public interface AuthorPage {
 	 * @param link The link text to search for
 	 */
 	public void assertLinkText(String link);
+	
+	/**
+	 * Waits for a page to finish reloading
+	 */
+	
+	public void waitForRefresh();
 
 }

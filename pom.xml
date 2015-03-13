@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.headwire.testing</groupId>
 	<artifactId>test-framework</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.9</version>
 	<name>AEM Test Framework</name>
 
 	<properties>
