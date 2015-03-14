@@ -295,22 +295,16 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 				wait.until(ExpectedConditions.presenceOfElementLocated(by));
 				WebElement el = driver.findElement(by);
 				try {
-					if (componentName.equals("title")) {
-						ACTIONS.doubleClick(driver, el);
-					} else {
-						el.click();
-						el.click();
-						el.click();
-						List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
-						for (WebElement el2 : editBarOptions) {
-							String actionAttrib = el2.getAttribute("data-action");
-							if (actionAttrib != null) {
-								if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
-									el2.click();
-								}
+					el.click();
+					List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
+					for (WebElement el2 : editBarOptions) {
+						String actionAttrib = el2.getAttribute("data-action");
+						if (actionAttrib != null) {
+							if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
+								el2.click();
 							}
-						} 
-					}
+						}
+					} 
 				} catch (Exception e) {
 					ACTIONS.doubleClick(driver, el);
 				}  
@@ -340,8 +334,6 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 					if (componentName.equals("title")) {
 						ACTIONS.doubleClick(driver, el);
 					} else {
-						el.click();
-						el.click();
 						el.click();
 						List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
 						for (WebElement el2 : editBarOptions) {
@@ -660,6 +652,10 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 				break;
 			}
 		}
+	}
+	
+	public void refresh() {
+		driver.navigate().refresh();
 	}
 	
 	public void waitForRefresh() {

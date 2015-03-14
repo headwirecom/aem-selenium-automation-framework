@@ -457,6 +457,11 @@ public interface AuthorPage {
 	public void assertLinkText(String link);
 	
 	/**
+	 * Refreshes the current page
+	 */
+	public void refresh();
+	
+	/**
 	 * Waits for a page to finish reloading
 	 */
 	
