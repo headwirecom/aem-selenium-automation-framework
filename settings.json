@@ -3,5 +3,6 @@
 	"publishUrl" : "http://192.168.42.23:4503",
 	"testUser" : "admin",
 	"testPassword" : "admin",
-	"version" : "6.0"
+	"version" : "6.0",
+	"browser" : "chrome"
 }

@@ -2,7 +2,6 @@ package com.headwire.testing.cq.base;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
@@ -18,10 +17,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 /**
  * Base class tests inherit from.&nbsp;Provides environment setup,
@@ -34,6 +37,7 @@ public class TestBase {
 	public static WebDriverWait wait;
 	public static TestEnvironment environment;
 	public static final ProxyServer server = new ProxyServer(4444);
+	public static String DRIVERS_PATH = "/drivers/";
 	
 	@BeforeClass
 	public static void setupProxy() throws FileNotFoundException, UnsupportedEncodingException {
@@ -55,14 +59,52 @@ public class TestBase {
 	}
 	
 	@Before
-	public void setupEnvironment() throws MalformedURLException {
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		Proxy proxy = server.seleniumProxy();
-		capabilities.setCapability(CapabilityType.PROXY, proxy);
-		driver = new FirefoxDriver(capabilities);
+	public void setupEnvironment() throws Exception {
+		setupBrowser();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		wait = new WebDriverWait(driver, 20);
+	}
+	
+	public void setupBrowser() throws Exception {
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		Proxy proxy = server.seleniumProxy();
+		capabilities.setCapability(CapabilityType.PROXY, proxy);
+		String browser = environment.getBrowser();
+		if (browser.equalsIgnoreCase("firefox")) {
+			driver = new FirefoxDriver(capabilities);
+		} else if (browser.equalsIgnoreCase("chrome")) {
+			String fullPath = System.getProperty("user.dir");
+			String driverPath = fullPath + DRIVERS_PATH;
+			String os = System.getProperty("os.name"); 
+			if (os.startsWith("Windows")) {
+				driverPath = driverPath + "chromedriver.exe";
+			} else if (os.startsWith("Mac")) {
+				driverPath = driverPath + "chromedriver-mac";
+			} else {
+				driverPath = driverPath + "chromedriver-linux";
+			}
+			System.setProperty("webdriver.chrome.driver", driverPath);
+			
+			driver = new ChromeDriver(capabilities);
+		} else if (browser.equalsIgnoreCase("ie")) {
+			String os = System.getProperty("os.name"); 
+			Assert.assertFalse("IE can only be tested on Windows", os.startsWith("Windows"));
+			String fullPath = System.getProperty("user.dir");
+			String driverPath = fullPath + DRIVERS_PATH;
+			String arch = System.getProperty("os.arch");
+			if (arch.equalsIgnoreCase("x86")) {
+				driverPath = driverPath + "iedriver-x86.exe";
+			} else {
+				driverPath = driverPath + "iedriver.exe";
+			}
+			System.setProperty("webdriver.ie.driver", driverPath);
+			driver = new InternetExplorerDriver(capabilities);
+		} else if (browser.equalsIgnoreCase("http")) {
+			driver = new HtmlUnitDriver(capabilities);
+		} else {
+			throw new Exception("Unsupported browser: "+browser+". Valid values are: firefox, chrome, ie, html");
+		}
 	}
 	
 	@After

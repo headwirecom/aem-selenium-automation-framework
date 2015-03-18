@@ -9,6 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.headwire.testing.cq.base.Constants.MouseAction;
 import com.headwire.testing.cq.base.TestEnvironment;
 
 /**
@@ -163,10 +164,16 @@ public interface AuthorPage {
 	 * @param componentName The crx name of the component to edit
 	 * @param location The numerical value of which component to select
 	 * 					when multiple of the same component exist
-	 * @throws Exception
 	 */
 	public void editComponent(String componentName, int location);
-
+	
+	/**
+	 * Opens the edit dialog using the specified mouse action
+	 * @param componentName The crx name of the component to edit
+	 * @param mouseAction MouseAction enum value for the type of mouse click to perform
+	 */
+	public void editComponent(String componentName, MouseAction mouseAction);
+	
 	/**
 	 * Helper method for AEM 6.1 text component
 	 * 
@@ -352,6 +359,11 @@ public interface AuthorPage {
 	 */
 	public void validateMetaData(String name, String text);
 
+	/** 
+	 * Closes the inline text editor
+	 */
+	public void closeInlineEditor();
+	
 	/**
 	 * Adds fields in multiselect fields
 	 * 

@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.headwire.testing.cq.base.Constants.MouseAction;
 import com.headwire.testing.cq.base.TestEnvironment;
 import com.headwire.testing.cq.factory.AuthorPage;
 
@@ -145,6 +146,10 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 		return driver.findElement(by);
 	}
 
+	public void closeInlineEditor() {
+		clickBy(By.xpath("//button[@data-action='control#close']"));
+	}
+	
 	public WebElement getParentOfElement(By by) {
 		wait.until(ExpectedConditions.presenceOfElementLocated(by));
 		WebElement element = driver.findElement(by);
@@ -313,6 +318,34 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 			} catch (NoSuchElementException e) {
 				Assert.fail("Failed to find component to drag and drop "+componentName+". Error: "+e.getMessage());
 			}
+		}
+	}
+	
+	public void editComponent(String componentName, MouseAction mouseAction) {
+		try {		
+			driver.switchTo().activeElement();
+			By by = By.xpath("//div[contains(@data-path,'/"+componentName+"')]");
+			wait.until(ExpectedConditions.presenceOfElementLocated(by));
+			WebElement el = driver.findElement(by);
+			switch (mouseAction) {
+			case CONTEXTCLICK:
+				el.click();
+				List<WebElement> editBarOptions = driver.findElements(By.xpath("//*[@id='EditableToolbar']/button"));
+				for (WebElement el2 : editBarOptions) {
+					String actionAttrib = el2.getAttribute("data-action");
+					if (actionAttrib != null) {
+						if (actionAttrib.equals("EDIT") || actionAttrib.equals("CONFIGURE")) {
+							el2.click();
+						}
+					}
+				} 
+				break;
+			default:
+				ACTIONS.doubleClick(driver, el);
+				break;
+			}
+		} catch (Exception e) {
+			Assert.fail("Failed to find component to drag and drop "+componentName+". Error: "+e.getMessage());
 		}
 	}
 	

@@ -12,6 +12,7 @@ public class TestEnvironment {
 	private String testUser;
 	private String testPassword;
 	private String version;
+	private String browser;
 	 
 	public String getAuthorUrl() {
 		return authorUrl;
@@ -42,6 +43,14 @@ public class TestEnvironment {
 	}
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	
+	public String getBrowser() {
+		return browser;
+	}
+	
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 		
 }
