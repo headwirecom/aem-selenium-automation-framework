@@ -1,6 +1,5 @@
 package com.headwire.testing.cq.base;
 
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 
@@ -40,10 +39,11 @@ public class TestBase {
 	public static String DRIVERS_PATH = "/drivers/";
 	
 	@BeforeClass
-	public static void setupProxy() throws FileNotFoundException, UnsupportedEncodingException {
+	public static void setupProxy() throws Exception {
 		environment = TestEnvironmentLoader.INSTANCE.loadConfiguration("dev");
 		String loginString = environment.getTestUser()+":"+environment.getTestPassword();
 		final byte[] encodedCredentials = Base64.encodeBase64(loginString.getBytes());
+		String[] whitelist = {environment.getAuthorUrl()+".*"};
 		server.start();
 		server.addRequestInterceptor(new RequestInterceptor() {
 		    public void process(BrowserMobHttpRequest request, Har har) {
@@ -55,6 +55,7 @@ public class TestBase {
 				}
 		    }
 		});
+		server.whitelistRequests(whitelist, 200);
 		server.newHar(environment.getAuthorUrl().replace("http://", ""));
 	}
 	
@@ -113,7 +114,7 @@ public class TestBase {
 	}
 	
 	@AfterClass
-	public static void stopProxy() {
+	public static void stopProxy() throws Exception {
 		server.stop();
 	}
 	

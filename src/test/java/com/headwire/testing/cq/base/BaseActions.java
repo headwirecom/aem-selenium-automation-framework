@@ -31,8 +31,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.google.common.base.Charsets;
-
 /**
  * Provides high level functions for performing complex interactions in AEM. 
  * 
@@ -112,7 +110,7 @@ public enum BaseActions {
 			InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("drag_and_drop_helper.js");
 			String jsString = "";
 			try {
-				jsString = IOUtils.toString(stream, Charsets.UTF_8);
+				jsString = IOUtils.toString(stream);
 			} catch (IOException e) {
 				Assert.fail("Drag and drop failed. Error: "+e.getMessage());
 			}
@@ -150,7 +148,7 @@ public enum BaseActions {
 		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("drag_and_drop_helper.js");
 		String jsString = "";
 		try {
-		jsString = IOUtils.toString(stream, Charsets.UTF_8);
+		jsString = IOUtils.toString(stream);
 		} catch (IOException e) {
 			return false;
 		}

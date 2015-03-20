@@ -88,8 +88,12 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 	}
 
 	public AuthorPage selectSidePanelTab(String tabName) {
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='coral-TabPanel-tab' and text()='"+tabName+"']")));
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='coral-TabPanel-tab' and text()='"+tabName+"']")));
+		} catch (Exception e) {
+			toggleSidePanel();
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='coral-TabPanel-tab' and text()='"+tabName+"']")));
+		}
 		for (WebElement el : sidePanelTabs) {
 			if (el.getText().equals(tabName)) {
 				el.click();
