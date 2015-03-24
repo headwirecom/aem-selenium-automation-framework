@@ -476,7 +476,21 @@ public interface AuthorPage {
 	/**
 	 * Waits for a page to finish reloading
 	 */
-	
 	public void waitForRefresh();
 
+	/**
+	 * Finds the field in the dialog by DOM index and increments by the specified amount
+	 * 
+	 * @param numberOfTimes           The number of times to increment field
+	 * @param indexOfIncrementField   The index of the element in the dom 
+	 */
+	public void increment(int numberOfTimes, int indexOfIncrementField); 
+	
+	/**
+	 * Finds the field in the dialog by DOM index and decrements by the specified amount
+	 * 
+	 * @param numberOfTimes           The number of times to decrement field
+	 * @param indexOfIncrementField   The index of the element in the dom 
+	 */
+	public void decrement(int numberOfTimes, int indexOfIncrementField); 
 }

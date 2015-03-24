@@ -704,4 +704,39 @@ public class AuthorPage60 extends BasePage implements AuthorPage{
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ContentFrame")));
 	}
 
+	public void increment(int numberOfTimes, int indexOfIncrementField) {
+		List<WebElement> incrementors = driver.findElements(By.xpath("//button[@title='Increment']"));
+		int incrementorsSize = incrementors.size(); 
+		WebElement targetIncrementor = null;
+		if (indexOfIncrementField < incrementors.size()) {
+			targetIncrementor =	incrementors.get(indexOfIncrementField);
+		} else if (incrementorsSize > 0) {
+			targetIncrementor = incrementors.get(incrementorsSize-1);
+		}
+		try {
+		for (int i=0; i<numberOfTimes; i++) {
+			targetIncrementor.click();
+		}
+		} catch (Exception e) {
+			Assert.fail("No incrementors found.");
+		}
+	}
+	
+	public void decrement(int numberOfTimes, int indexOfIncrementField) {
+		List<WebElement> decrementors = driver.findElements(By.xpath("//button[@title='Increment']"));
+		int decrementorsSize = decrementors.size(); 
+		WebElement targetDecrementor = null;
+		if (indexOfIncrementField < decrementors.size()) {
+			targetDecrementor =	decrementors.get(indexOfIncrementField);
+		} else if (decrementorsSize > 0) {
+			targetDecrementor = decrementors.get(decrementorsSize-1);
+		}
+		try {
+		for (int i=0; i<numberOfTimes; i++) {
+			targetDecrementor.click();
+		}
+		} catch (Exception e) {
+			Assert.fail("No incrementors found.");
+		}
+	}
 }
