@@ -304,16 +304,21 @@ public interface AuthorPage {
 	 * 
 	 * @param label The label of the dropdown field
 	 * @param option The option to select
-	 * @throws InterruptedException
 	 */
 	public void selectDropDown(String label, String option);
 
+	/**
+	 * Selects the panel specified in the sidekick
+	 * 
+	 * @param tabName The name of the tab to select
+	 */
+	public void selectSidekickTab(String tabName);
+	
 	/**
 	 * Moves the mouse to the specified position
 	 * 
 	 * @param x coordinate
 	 * @param y coordinate
-	 * @throws AWTException
 	 */
 	public void moveMouse(int x, int y);
 
@@ -389,6 +394,15 @@ public interface AuthorPage {
 	 * @return The active AuthorPage object
 	 */
 	public AuthorPage fillInMultipleFields(String fieldName, String[] values);
+	
+	/**
+	 * Inputs text into RTE field based on adjacent textarea 
+	 * 
+	 * @param fieldName The name of each individual field
+	 * @param value    The text value to input in the field
+	 * @return The active AuthorPage object
+	 */
+	public void fillInRTE(String fieldName, String value);
 
 	/**
 	 * Selects dropdown value in x-tab panels
@@ -403,6 +417,13 @@ public interface AuthorPage {
 	 * @return String value of the input fields text
 	 */
 	public String getTextFromInput(By by);
+	
+	/**
+	 * Extracts text from an html input field
+	 * @param elem The element to extract text from
+	 * @return String value of the input fields text
+	 */
+	public String getTextFromInput(WebElement ele);
 	
 	/**
 	 * Waits for and finds a list of elements by their selenium selector

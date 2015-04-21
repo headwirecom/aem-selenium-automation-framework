@@ -3,7 +3,7 @@ package com.headwire.testing.cq.factory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.headwire.testing.cq.pageobjects.AuthorPage60;
+import com.headwire.testing.cq.pageobjects.BaseAuthorPage;
 import com.headwire.testing.cq.pageobjects.AuthorPage61;
 import com.headwire.testing.cq.pageobjects.DAMPage60;
 import com.headwire.testing.cq.pageobjects.InboxPage60;
@@ -19,11 +19,11 @@ public class PageFactory extends AbstractPageFactory {
 	public AuthorPage getAuthorPage(WebDriver driver, WebDriverWait wait,
 			String version) {
 		if (version.equals("6.0")) {
-			return new AuthorPage60(driver, wait);
+			return new BaseAuthorPage(driver, wait);
 		} else if (version.equals("6.1")) {
 			return new AuthorPage61(driver, wait);
 		}
-		return new AuthorPage60(driver, wait);
+		return new BaseAuthorPage(driver, wait);
 	}
 
 	@Override

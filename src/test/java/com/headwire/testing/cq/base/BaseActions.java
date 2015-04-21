@@ -122,15 +122,14 @@ public enum BaseActions {
 			js.executeScript(fullJSString); 
 		} else {
 			Actions builder = new Actions(driver);
-			Action dragAndDrop = builder.clickAndHold(source)
-					.moveToElement(target, 50, 20)
-					.moveByOffset(5, 5)
+			Action dragDrop = builder.clickAndHold(source)
+					.moveToElement(target)
 					.build();
-
-			dragAndDrop.perform();		
+			dragDrop.perform();	
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@class, 'ghost')]")));
 			WebElement containerGhost = driver.findElement(By.xpath("//div[contains(@class, 'ghost')]"));
 			containerGhost.click();
+			driver.switchTo().defaultContent();
 		}
 	}
 	

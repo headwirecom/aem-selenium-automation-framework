@@ -148,9 +148,13 @@ public class BasePage {
 	 * @return List of all the found elements
 	 */
 	public List<WebElement> getElements(By by) {
+		try {
 		wait.until(ExpectedConditions.presenceOfElementLocated(by));
 		List<WebElement> retVal = driver.findElements(by);
 		return retVal;
+		} catch (Exception e) {
+			return new ArrayList<WebElement>();
+		}
 	}
 	
 	/**
@@ -161,5 +165,15 @@ public class BasePage {
 	public String getTextFromInput(By by) {
 		wait.until(ExpectedConditions.presenceOfElementLocated(by));
 		return driver.findElement(by).getAttribute("value");
+	}
+	
+	/**
+	 * Extracts text from an html input field
+	 * @param elem The element to extract text from
+	 * @return String value of the input fields text
+	 */
+	public String getTextFromInput(WebElement ele) {
+		wait.until(ExpectedConditions.visibilityOf(ele));
+		return ele.getAttribute("value");
 	}
 }

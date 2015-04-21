@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * 
  * @author <a href="mailto:dsamarjian@gmail.com">Diran Samarjian</a>
  */
-public class AuthorPage61 extends AuthorPage60 {
+public class AuthorPage61 extends BaseAuthorPage {
 
 
 	public AuthorPage61(WebDriver driver, WebDriverWait wait) {

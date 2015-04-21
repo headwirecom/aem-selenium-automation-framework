@@ -57,6 +57,13 @@ public interface PublishPage {
 	public String getTextFromInput(By by);
 	
 	/**
+	 * Extracts text from an html input field
+	 * @param elem The element to extract text from
+	 * @return String value of the input fields text
+	 */
+	public String getTextFromInput(WebElement ele);
+	
+	/**
 	 * Waits for and finds a list of elements by their selenium selector
 	 * @param by Selenium selector of the elements
 	 * @return List of all the found elements

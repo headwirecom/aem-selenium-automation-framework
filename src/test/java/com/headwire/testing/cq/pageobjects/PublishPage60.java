@@ -21,7 +21,6 @@ import com.headwire.testing.cq.factory.PublishPage;
 public class PublishPage60 extends BasePage implements PublishPage {
 
 	public PublishPage60(String publishUrl) {
-		PageFactory.initElements(driver, this);
 		driver = new FirefoxDriver();
 		wait = new WebDriverWait(driver, 5);	
 		driver.get(publishUrl+"?device=browser");
@@ -29,6 +28,7 @@ public class PublishPage60 extends BasePage implements PublishPage {
 			driver.close();
 			Assert.fail("Incorrect Publish Page - Expected: "+publishUrl+" Actual: "+driver.getCurrentUrl());
 		}
+		PageFactory.initElements(driver, this);
 	}
 
 	public void validateContentByTag(By by, String text) {
