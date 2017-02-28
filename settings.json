@@ -1,8 +1,9 @@
 {
-	"authorUrl" : "http://192.168.42.23:4502",
-	"publishUrl" : "http://192.168.42.23:4503",
+	"authorUrl" : "http://192.168.42.205:4502",
+	"publishUrl" : "http://192.168.42.205:4503",
 	"testUser" : "admin",
 	"testPassword" : "admin",
 	"version" : "6.0",
-	"browser" : "firefox"
+	"browser" : "firefox",
+	"proxyEnabled" : "true"
 }
