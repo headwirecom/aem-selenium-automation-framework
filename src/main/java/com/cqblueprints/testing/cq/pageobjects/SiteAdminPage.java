@@ -210,4 +210,10 @@ public interface SiteAdminPage {
 	 * @param link The link text to search for
 	 */
 	public void assertLinkText(String link);
+
+	/**
+	 * Opens the sites page
+	 */
+	public void openSitesPage();
+
 }

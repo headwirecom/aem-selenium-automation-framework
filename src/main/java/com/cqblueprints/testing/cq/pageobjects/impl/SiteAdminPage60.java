@@ -46,21 +46,31 @@ public class SiteAdminPage60 extends BasePage implements SiteAdminPage {
 	}
 
 	public SiteAdminPage navigateToPage(String path) {
-		for (WebElement page : pages) {
-			String pageLink = page.getAttribute("data-path");
-			if (path.equals(pageLink)) {
-				boolean mouseOver = ACTIONS.mouseOver(driver, page);
-				if (mouseOver) {
-					editPage.click();
-				} else {
-					Assert.fail("Failed to mouseover page.");
+		if (driver.getCurrentUrl().contains("/siteadmin#")) {
+			for (WebElement page : pages) {
+				String pageLink = page.getAttribute("data-path");
+				if (path.equals(pageLink)) {
+					boolean mouseOver = ACTIONS.mouseOver(driver, page);
+					if (mouseOver) {
+						editPage.click();
+					} else {
+						Assert.fail("Failed to mouseover page.");
+					}
+				} else if (path.contains(pageLink)) {
+					page.click();
 				}
-			} else if (path.contains(pageLink)) {
-				page.click();
+			}
+
+			Assert.fail("Couldn't find page: " + path);
+		} else {
+			String[] parts = path.split("/");
+			for (String part : parts) {
+				if (part.equals("content")) {
+					continue;
+				}
+				driver.findElement(By.xpath("//div[text()[normalize-space() = '"+part+"']]")).click();
 			}
 		}
-
-		Assert.fail("Couldn't find page: " + path);
 		return new SiteAdminPage60(driver, wait);
 	}
 
@@ -247,5 +257,9 @@ public class SiteAdminPage60 extends BasePage implements SiteAdminPage {
 	public void deactivatePage() {
 		clickSiteAdminLink("Unpublish");
 		driver.findElement(By.xpath("//div/a[text()='Unpublish']")).click();
+	}
+
+	public void openSitesPage() {
+		driver.findElement(By.xpath("//div[text()='Sites']")).click();
 	}
 }
