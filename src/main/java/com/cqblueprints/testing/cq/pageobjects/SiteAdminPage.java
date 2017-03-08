@@ -137,8 +137,6 @@ public interface SiteAdminPage {
 
 	/**
 	 * Activates the selected page using the site admin interface
-	 * 
-	 * @throws InterruptedException
 	 */
 	public void activatePage();
 

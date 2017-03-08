@@ -357,12 +357,6 @@ public class AuthorPageActions {
 		}
 	}
 	
-	/**
-	 * @param driver
-	 * @param wait
-	 * @param elementName
-	 * @param text
-	 */
 	public static void select(WebDriver driver, WebDriverWait wait, String elementName, String text) {
 		int i = 0;
 		String elText = "";

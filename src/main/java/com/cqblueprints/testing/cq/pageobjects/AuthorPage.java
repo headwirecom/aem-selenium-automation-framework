@@ -2,12 +2,9 @@ package com.cqblueprints.testing.cq.pageobjects;
 
 import com.cqblueprints.testing.cq.base.Constants.MouseAction;
 import com.cqblueprints.testing.cq.base.TestEnvironment;
-import org.apache.http.client.ClientProtocolException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +34,8 @@ public interface AuthorPage {
 	 * Select the specified side panel tab by the tab title
 	 * 
 	 * @param tabName   The text title of the tab to switch to
+	 *
+	 * @return   Returns a new instance of the AuthorPage with reloaded elements initialized
 	 */
 	public AuthorPage selectSidePanelTab(String tabName);
 
@@ -78,14 +77,14 @@ public interface AuthorPage {
 	
 	/**
 	 * Helper method to locate an element by a selenium selector
-	 * @param By The selenium selector to use to find the element
+	 * @param by The selenium selector to use to find the element
 	 * @return The WebElement found
 	 */
 	public WebElement findElementBy(By by);
 
 	/**
 	 * Helper method to locate an element's parent by a selenium selector
-	 * @param By The selenium selector to use to find the element
+	 * @param by The selenium selector to use to find the element
 	 * @return The WebElement found
 	 */
 	public WebElement getParentOfElement(By by);
@@ -108,8 +107,8 @@ public interface AuthorPage {
 	/**
 	 * Types text into the CQ RTE iframe
 	 * @param text The text to input
-	 * @param row
-	 * @param column
+	 * @param row  The row index of the cell to fill
+	 * @param column  The column index of the cell to fill
 	 */
 	public void typeInRTETable(String text, int row, int column);
 
@@ -121,7 +120,6 @@ public interface AuthorPage {
 	/**
 	 * Helper method to open the inline text editor for components
 	 * @param componentName The name of the component to open the text editor for
-	 * @throws InterruptedException
 	 */
 	public void editText(String componentName);
 
@@ -161,7 +159,6 @@ public interface AuthorPage {
 	/**
 	 * Opens the edit dialog for the specified component
 	 * @param componentName The crx name of the component to edit
-	 * @throws Exception
 	 */
 	public void editComponent(String componentName);
 	
@@ -190,7 +187,6 @@ public interface AuthorPage {
 	/**
 	 * Deletes the specified component
 	 * @param componentName The crx name of the component to edit
-	 * @throws Exception
 	 */
 	public void deleteComponent(String componentName);
 
@@ -276,9 +272,6 @@ public interface AuthorPage {
 	 * Activates the page at the specified path
 	 * @param pagePath The path of the page to activate
 	 * @param env The environment settings
-	 * @throws InterruptedException
-	 * @throws ClientProtocolException
-	 * @throws IOException
 	 */
 	public void activatePage(String pagePath, TestEnvironment env);
 
@@ -286,9 +279,6 @@ public interface AuthorPage {
 	 * Deactivates the page at the specified path
 	 * @param pagePath The path of the page to activate
 	 * @param env The environment settings
-	 * @throws InterruptedException
-	 * @throws ClientProtocolException
-	 * @throws IOException
 	 */
 	public void deactivatePage(String pagePath, TestEnvironment env);
 
@@ -333,8 +323,6 @@ public interface AuthorPage {
 	/**
 	 * Closes the auto suggest popup that appears when typing 
 	 * into fields
-	 *  
-	 * @throws AWTException
 	 */
 	public void closeSuggestions();
 
@@ -354,6 +342,7 @@ public interface AuthorPage {
 	 * 
 	 * @param label The label of the element adjacent to the desired element
 	 * @param text The text to input
+	 * @param fallback The fallback selector to use if label is not found
 	 */
 	public void followingSiblingInput(String label, String text, String fallback);
 
@@ -381,7 +370,7 @@ public interface AuthorPage {
 	 * Adds fields in multiselect fields
 	 * 
 	 * @param numberOfTabs The number of fields to add
-	 * @return
+	 * @return The active AuthorPage object
 	 */
 	public AuthorPage addTabs(int numberOfTabs);
 
@@ -408,7 +397,6 @@ public interface AuthorPage {
 	 * 
 	 * @param fieldName The name of each individual field
 	 * @param value    The text value to input in the field
-	 * @return The active AuthorPage object
 	 */
 	public void fillInRTE(String fieldName, String value);
 
@@ -428,7 +416,7 @@ public interface AuthorPage {
 	
 	/**
 	 * Extracts text from an html input field
-	 * @param elem The element to extract text from
+	 * @param ele The element to extract text from
 	 * @return String value of the input fields text
 	 */
 	public String getTextFromInput(WebElement ele);

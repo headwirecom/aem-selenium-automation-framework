@@ -1,18 +1,7 @@
 package com.cqblueprints.testing;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.ByteArrayOutputStream;
-import org.apache.http.Header;
-import org.apache.http.util.EntityUtils;
-
+import com.cqblueprints.testing.DragAndDropHelper.Position;
 import junit.framework.Assert;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -25,19 +14,21 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.cqblueprints.testing.DragAndDropHelper.Position;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- * Provides high level functions for performing complex interactions in AEM. 
- * 
- * @author <a href="mailto:dsamarjian@gmail.com">Diran Samarjian</a>
+ * Provides high level functions for performing complex interactions in AEM.
  */
 public enum PageUtil {
 
@@ -78,8 +69,9 @@ public enum PageUtil {
 	 * @param  pageName   The name of the page that will be created
 	 * @param  parentPath The path of the parent page to create under
 	 * @param  template   The AEM template that will be used for the page
-	 * @param  env        The environment settings to use
-	 *
+	 * @param  url        The environment url to use
+	 * @param  user 	  The test user used to log in
+	 * @param  pass   	  The test password used to log in
 	 */
 	public void createPage(String pageName, String parentPath, String template, String url, String user, String pass) {		
 		try {
@@ -110,9 +102,10 @@ public enum PageUtil {
 	/**
 	 * Uses the CQ WCMCommands to active a page using a POST action
 	 *
-	 * @param  pagePath   The path of the page to be activated 
-	 * @param  env        The environment settings to use
-	 *
+	 * @param  pagePath   The path of the page to be activated
+	 * @param  url        The environment url to use
+	 * @param  user 	  The test user used to log in
+	 * @param  pass   	  The test password used to log in
 	 */
 	public void activatePage(String pagePath, String url, String user, String pass) {		
 		try {
@@ -133,9 +126,10 @@ public enum PageUtil {
 	/**
 	 * Uses the CQ WCMCommands to deactive a page using a POST action
 	 *
-	 * @param  pagePath   The path of the page to be activated 
-	 * @param  env        The environment settings to use
-	 *
+	 * @param  pagePath   The path of the page to be activated
+	 * @param  url        The environment url to use
+	 * @param  user 	  The test user used to log in
+	 * @param  pass   	  The test password used to log in
 	 */
 	public void deactivatePage(String pagePath, String url, String user, String pass) {	
 		try {
@@ -156,9 +150,10 @@ public enum PageUtil {
 	/**
 	 * Uses the CQ WCMCommands to delete a page using a POST action
 	 *
-	 * @param  pagePath   The path of the page to be activated 
-	 * @param  env        The environment settings to use
-	 *
+	 * @param  pagePath   The path of the page to be activated
+	 * @param  url        The environment url to use
+	 * @param  user 	  The test user used to log in
+	 * @param  pass   	  The test password used to log in
 	 */
 	public void deletePage(String pagePath, String url, String user, String pass) {
 		try {
@@ -180,8 +175,11 @@ public enum PageUtil {
 	
 	/**
 	 * Helper function to set the authentication context on POST actions
-	 * 
-	 * @param  env        The environment settings to use
+	 *
+	 * @param  user 	  The test user used to log in
+	 * @param  pass   	  The test password used to log in
+	 *
+	 * @return  The HttpClientContext with authentication credentials to access instance
 	 */
 	public HttpClientContext getAuthenticationContext(String user, String pass) {
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();

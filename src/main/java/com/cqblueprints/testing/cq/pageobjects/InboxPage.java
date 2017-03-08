@@ -13,7 +13,6 @@ public interface InboxPage {
 	 * @param pageTitle The title of the page shown in the inbox
 	 * @param comment   The comment to input when advancing
 	 * @return          A new instance of InboxPage after JS has run updates
-	 * @throws InterruptedException
 	 */
 	public InboxPage advanceWorkflowThroughInbox(String pageTitle, String comment);
 	

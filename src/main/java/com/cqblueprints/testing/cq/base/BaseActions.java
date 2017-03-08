@@ -142,21 +142,9 @@ public enum BaseActions {
 	 * @param  source The content asset to be dragged
 	 * @param  target The parsys that the component will be placed in
 	 *
+	 * @return Boolean representing if the drag and drop operation was successful
 	 */
 	public boolean dragDropAsset(WebDriver driver, WebDriverWait wait, WebElement source, WebElement target) {
-//		InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("drag_and_drop_helper.js");
-//		String jsString = "";
-//		try {
-//		jsString = IOUtils.toString(stream);
-//		} catch (IOException e) {
-//			return false;
-//		}
-//		JavascriptExecutor js = (JavascriptExecutor)driver;  
-//		String targetEl = "jQuery('div[data-path=\""+target.getAttribute("data-path")+"\"]:last')";
-//		String sourceEl = "jQuery('article[data-path=\""+source.getAttribute("data-path")+"\"]>div')";
-//		String fullJSString = jsString+""+sourceEl+".simulateDragDrop({ "
-//				+ "dropTarget: "+targetEl+"});";
-//		js.executeScript(fullJSString); 
 		DragAndDropHelper.html5_DragAndDrop(driver, source, target, Position.Center, Position.Center);
 		target.click();
 		return true;
@@ -306,6 +294,8 @@ public enum BaseActions {
 	 * Helper function to set the authentication context on POST actions
 	 * 
 	 * @param  env        The environment settings to use
+	 *
+	 * @return  The HttpClientContext with authentication credentials to access instance
 	 */
 	public HttpClientContext getAuthenticationContext(TestEnvironment env) {
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();

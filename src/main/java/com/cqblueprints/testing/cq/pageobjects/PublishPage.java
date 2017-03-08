@@ -64,7 +64,7 @@ public interface PublishPage {
 	
 	/**
 	 * Extracts text from an html input field
-	 * @param elem The element to extract text from
+	 * @param ele The element to extract text from
 	 * @return String value of the input fields text
 	 */
 	public String getTextFromInput(WebElement ele);
