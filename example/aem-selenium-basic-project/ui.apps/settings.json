@@ -1,0 +1,9 @@
+{
+	"authorUrl" : "http://localhost:4502",
+	"publishUrl" : "http://localhost:4503",
+	"testUser" : "admin",
+	"testPassword" : "admin",
+	"version" : "6.3",
+	"browser" : "chrome",
+	"proxyEnabled" : "false"
+}

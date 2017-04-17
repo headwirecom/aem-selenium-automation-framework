@@ -47,6 +47,17 @@ public class BasePage {
 		Assert.assertNull("Element exists: "+by.toString(), el);
 	}
 
+	public void assertNotExists(By by, WebDriverWait wait) {
+		WebElement el = null;
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+			el = driver.findElement(by);
+		} catch (Exception e) {
+
+		}
+		Assert.assertNull("Element exists: "+by.toString(), el);
+	}
+
     public void assertVisibility(By by, boolean visible) {
         WebElement el = null;
         try {

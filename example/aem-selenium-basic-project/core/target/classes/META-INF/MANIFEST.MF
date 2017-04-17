@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1492472832037
+Build-Jdk: 1.8.0_91
+Built-By: headwire
+Bundle-Description: Maven Multimodule project for AEM Selenium Basic Pro
+ ject.
+Bundle-ManifestVersion: 2
+Bundle-Name: AEM Selenium Basic Project Bundle
+Bundle-SymbolicName: com.headwire.aem-selenium-basic-project
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.headwire.asbp.models;uses:="org.apache.sling.api.res
+ ource,org.apache.sling.models.annotations";version="0.0.1"
+Import-Package: javax.inject,org.apache.sling.api.resource;version="[2.8
+ ,3)",org.apache.sling.models.annotations;version="[1.1,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Sling-Model-Packages: com.headwire.asbp.models
+Tool: Bnd-2.3.0.201405100607

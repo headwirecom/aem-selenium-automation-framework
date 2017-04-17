@@ -14,7 +14,11 @@ public class PageFactory extends AbstractPageFactory {
 			return new BaseAuthorPage(driver, wait);
 		} else if (version.equals("6.1")) {
 			return new AuthorPage61(driver, wait);
-		} else if (version.equals("6.3")) {
+		}
+		else if (version.equals("6.2")) {
+			return new AuthorPage62(driver, wait);
+		}
+		else if (version.equals("6.3")) {
 			return new AuthorPage63(driver, wait);
 		}
 		return new BaseAuthorPage(driver, wait);
@@ -56,7 +60,16 @@ public class PageFactory extends AbstractPageFactory {
 	public SiteAdminPage getSiteAdminPage(WebDriver driver, WebDriverWait wait, String version) {
 		if (version.equals("6.0")) {
 			return new SiteAdminPage60(driver, wait);
-		}  else if (version.equals("6.3")) {
+		}
+		else if(version.equals("6.1"))
+		{
+			return new SiteAdminPage61(driver, wait);
+		}
+		else if(version.equals("6.2"))
+		{
+			return new SiteAdminPage62(driver, wait);
+		}
+		else if (version.equals("6.3")) {
 			return new SiteAdminPage63(driver, wait);
 		}
 		return new SiteAdminPage60(driver, wait);

@@ -4,6 +4,7 @@ import com.cqblueprints.testing.cq.base.Constants.MouseAction;
 import com.cqblueprints.testing.cq.base.TestEnvironment;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Map;
@@ -469,6 +470,14 @@ public interface AuthorPage {
 	 * @param by selenium selector of the target element
 	 */
 	public void assertNotExists(By by);
+
+	/**
+	 * Validate an element does not exist by a selenium selector
+	 *
+	 * @param by selenium selector of the target element
+	 * @param wait override the default wait for this assertion
+	 */
+	public void assertNotExists(By by, WebDriverWait wait);
 	
 	/**
 	 * Validate an element has the specified text by a selenium selector

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ import java.util.List;
  * @author <a href="mailto:dsamarjian@gmail.com">Diran Samarjian</a>
  */
 public class SiteAdminPage63 extends SiteAdminPage60 implements SiteAdminPage {
+
+	public static final Logger LOG = LoggerFactory.getLogger(SiteAdminPage63.class);
 
 	public SiteAdminPage63(WebDriver driver, WebDriverWait wait) {
 		super(driver, wait);
@@ -51,19 +55,55 @@ public class SiteAdminPage63 extends SiteAdminPage60 implements SiteAdminPage {
 	}
 
 	public void createPageWithTemplate(String thumbnailPath, String title) {
+
+		boolean createClicked = false;
+		for(int i = 0; i < 5; i++)
+		{
+			try
+			{
+				driver.findElement(By.xpath("//coral-button-label[text()='Create']"))
+						.click();
+				createClicked = true;
+				break;
+			}
+			catch(Exception e)
+			{
+				LOG.warn("Exception trying to click 'Create' button, try " + i, e);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e1) {
+					LOG.error("InterruptedException while trying to sleep", e1);
+				}
+			}
+		}
+
+		if(!createClicked)
+		{
+			LOG.error("Could not click create.");
+			return;
+		}
+
+		driver.findElement(By.xpath("//coral-list-item-content[text()='Page']")).click();
+
 		driver.findElement(By.xpath("//img[@src='" + thumbnailPath + "']"))
 				.click();
-		try {
-			clickButtonByText("Next");
-		} catch (Exception e) {
-			driver.findElement(By.xpath("//button[@coral-wizardview-next]"))
-					.click();
-		}
-		try {
-			driver.findElement(By.name("pageTitle")).sendKeys(title);
-		} catch (Exception e) {
-			driver.findElement(By.name("./jcr:title")).sendKeys(title);
-		}
+//		try {
+//			clickButtonByText("Next");
+//		} catch (Exception e) {
+//
+//		}
+
+		driver.findElement(By.xpath("//button[@coral-wizardview-next]"))
+				.click();
+
+//		try {
+//			driver.findElement(By.name("pageTitle")).sendKeys(title);
+//		} catch (Exception e) {
+//
+//		}
+
+		driver.findElement(By.name("./jcr:title")).sendKeys(title);
+
 		driver.findElement(By.xpath("//coral-button-label[text()='Create']"))
 				.click();
 		try {

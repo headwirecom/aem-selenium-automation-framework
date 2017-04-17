@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ import static com.cqblueprints.testing.cq.base.BaseActions.ACTIONS;
  * @author <a href="mailto:dsamarjian@gmail.com">Diran Samarjian</a>
  */
 public class SiteAdminPage60 extends BasePage implements SiteAdminPage {
+
+	public static final Logger LOG = LoggerFactory.getLogger(SiteAdminPage60.class);
 
 	@FindBy(className = "card-page")
 	private List<WebElement> pages;

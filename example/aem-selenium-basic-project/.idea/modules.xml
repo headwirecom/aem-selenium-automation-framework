@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aem-selenium-basic-project.iml" filepath="$PROJECT_DIR$/aem-selenium-basic-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/aem-selenium-basic-project.core.iml" filepath="$PROJECT_DIR$/core/aem-selenium-basic-project.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui.apps/aem-selenium-basic-project.ui.apps.iml" filepath="$PROJECT_DIR$/ui.apps/aem-selenium-basic-project.ui.apps.iml" />
+    </modules>
+  </component>
+</project>

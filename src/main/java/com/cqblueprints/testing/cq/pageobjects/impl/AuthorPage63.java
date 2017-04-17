@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.cqblueprints.testing.cq.base.BaseActions.ACTIONS;
 
@@ -81,6 +82,7 @@ public class AuthorPage63 extends BaseAuthorPage {
 	}
 
 	public void editComponent(String componentName) {
+		System.out.println("Editing Component: " + componentName);
 		if (!driver.getCurrentUrl().contains(AEM_EDITOR)) {
 			editComponentClassicUI(componentName);
 		} else {
@@ -88,10 +90,14 @@ public class AuthorPage63 extends BaseAuthorPage {
 				driver.switchTo().activeElement();
 				By by = By.xpath("//div[contains(@data-path,'/" + componentName
 						+ "')]");
-				wait.until(ExpectedConditions.presenceOfElementLocated(by));
+				System.out.println("Begin waiting for visibility");
+				wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+				System.out.println("Visible");
 				WebElement el = driver.findElement(by);
 				try {
+					System.out.println("Sleep 300ms");
 					Thread.sleep(300);
+					System.out.println("Slept 300ms");
 					el.click();
 					List<WebElement> editBarOptions = driver.findElements(By
 							.xpath("//*[@id='EditableToolbar']/button"));
@@ -107,6 +113,7 @@ public class AuthorPage63 extends BaseAuthorPage {
 						}
 					}
 				} catch (Exception e) {
+					System.out.println("Edit bar click failed, trying doubleclick");
 					ACTIONS.doubleClick(driver, el);
 				}
 
@@ -115,11 +122,27 @@ public class AuthorPage63 extends BaseAuthorPage {
 						+ componentName + ". Error: " + e.getMessage());
 			}
 			try {
+				System.out.println("Second sleep 300ms");
 				Thread.sleep(300);
-				WebElement dialogFrame = driver.findElement(By.xpath("//coral-dialog-content/iframe"));
-				driver.switchTo().frame(dialogFrame);
+				System.out.println("End second sleep 300ms");
+				//WebElement dialogFrame = driver.findElement(By.xpath("//coral-dialog-content/iframe"));
+				WebElement dialogFrame = null;
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+				List<WebElement> elements = driver.findElements(By.xpath("//coral-dialog-content/iframe"));
+				if(elements == null || elements.isEmpty())
+				{
+					System.out.println("Dialog frame not found");
+				}
+				else
+				{
+					dialogFrame = elements.get(0);
+					driver.switchTo().frame(dialogFrame);
+					System.out.println("Switched to dialog frame");
+				}
+
 			} catch (Exception e) {
 				// non-iframe dialog
+				e.printStackTrace();
 			}
 		}
 	}
@@ -163,6 +186,7 @@ public class AuthorPage63 extends BaseAuthorPage {
 			try {
 				selectDelete(componentName);
 			} catch (NoSuchElementException e) {
+				e.printStackTrace();
 				Assert.fail("Failed to delete component");
 			} catch (StaleElementReferenceException e) {
 				// Try again in case component triggered
@@ -177,26 +201,58 @@ public class AuthorPage63 extends BaseAuthorPage {
 	}
 
 	private void selectDelete(String componentName) {
+		System.out.println("Before switch to active element");
 		driver.switchTo().activeElement();
+		System.out.println("After switch to active element");
 		List<WebElement> componentTargets = driver.findElements(By
 				.xpath("//*[@id='OverlayWrapper']/div/div"));
+		System.out.println("After finding component targets");
 		for (WebElement el : componentTargets) {
+			System.out.println("Start loop");
 			if (el.getAttribute("data-path") != null) {
+				System.out.println("In first if");
 				if (el.getAttribute("data-path").endsWith(
 						"/" + componentName.toLowerCase())) {
+					System.out.println("In second if");
 					el.click();
+					System.out.println("After el.click()");
 					List<WebElement> editBarOptions = driver
 							.findElements(By
 									.xpath("//*[@id='EditableToolbar']/button"));
+					System.out.println("After find buttons");
 					for (WebElement el2 : editBarOptions) {
+						System.out.println("Start second loop");
 						String actionAttrib = el2
 								.getAttribute("data-action");
 						if (actionAttrib != null) {
+							System.out.println("In third if");
 							if (actionAttrib.equals("DELETE")) {
+								System.out.println("In fourth if");
 								el2.click();
-								driver.findElement(
-										By.xpath("//coral-button-label[text()='Delete']"))
-										.click();
+								System.out.println("After el2.click()");
+								driver.switchTo().defaultContent();
+								try
+								{
+									Thread.sleep(200);
+								}
+								catch(Exception e)
+								{
+
+								}
+								driver.switchTo().activeElement();
+								try
+								{
+									Thread.sleep(200);
+								}
+								catch(Exception e)
+								{
+
+								}
+								System.out.println("After second switch to active element");
+								WebElement deleteConfirmButton = driver.findElement(
+										By.xpath("//coral-button-label[text()='Delete']"));
+								System.out.println("Delete confirm button: " + deleteConfirmButton.getText());
+								deleteConfirmButton.click();
 							}
 						}
 					}
@@ -208,11 +264,13 @@ public class AuthorPage63 extends BaseAuthorPage {
 	}
 
 	public void fillInDialogFieldByName(String name, String text) {
+		System.out.println("6-3 Filling in "+ name + " field with text " + text);
 		int maxRetries = 5;
 		int retries = 0;
 		String inputString = "";
 		try {
 			while (!inputString.equals(text) && retries < maxRetries) {
+				System.out.println("6-3 Try " + (retries + 1) + "/" + maxRetries);
 				By fieldBy = By.name(name);
 				wait.until(ExpectedConditions.presenceOfElementLocated(fieldBy));
 				List<WebElement> fields = driver.findElements(fieldBy);
@@ -234,7 +292,9 @@ public class AuthorPage63 extends BaseAuthorPage {
 				field.sendKeys(Keys.BACK_SPACE);
 				field.sendKeys("" + text.charAt(text.length() - 1));
 				retries++;
+				System.out.println("6-3 Sleeping 500ms");
 				Thread.sleep(500);
+				System.out.println("6-3 Slept 500ms");
 				inputString = field.getAttribute("value");
 			}
 			if (retries >= maxRetries) {
@@ -306,9 +366,20 @@ public class AuthorPage63 extends BaseAuthorPage {
 			for (WebElement el : sidePanelTabs) {
 				if (el.getText().equals(tabName)) {
 					el.click();
+					return;
 				}
 			}
+
+			selectGraniteDialogTab(tabName);
 		} catch (Exception e) {
+			selectGraniteDialogTab(tabName);
+		}
+	}
+
+	private void selectGraniteDialogTab(String tabName)
+	{
+		try
+		{
 			driver.switchTo().activeElement();
 			By tabBy = By
 					.xpath("//nav[@class='coral-TabPanel-navigation']/a[text()='"
@@ -316,6 +387,19 @@ public class AuthorPage63 extends BaseAuthorPage {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(tabBy));
 			driver.findElement(tabBy).click();
 		}
+		catch(Exception e)
+		{
+			selectCoralDialogTab(tabName);
+		}
+
+	}
+
+	private void selectCoralDialogTab(String tabName)
+	{
+		driver.switchTo().activeElement();
+		By tabBy = By.xpath("//coral-tab-label[text()='" + tabName + "']");
+		WebElement tab = wait.until(ExpectedConditions.visibilityOfElementLocated(tabBy));
+		tab.click();
 	}
 
 	public void selectInlineEditor(String type) {
@@ -326,6 +410,7 @@ public class AuthorPage63 extends BaseAuthorPage {
 			el.clear();
 			el.sendKeys(type);
 		} catch (Exception e) {
+			switchToContent();
 			By by = By.xpath("//*[@contenteditable]");
 			WebElement el = driver.findElement(by);
 			el.clear();
@@ -334,10 +419,6 @@ public class AuthorPage63 extends BaseAuthorPage {
 	}
 
 	public void closeInlineEditor() {
-		try {
-			clickBy(By.xpath("//button[@data-action='control#save']"));
-		} catch (Exception e) {
-			ACTIONS.hitEnter();
-		}
+		ACTIONS.hitEnter();
 	}
 }

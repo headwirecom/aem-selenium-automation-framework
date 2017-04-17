@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>AEM Selenium Basic Project Content Package</comment>
+<entry key="createdBy">headwire</entry>
+<entry key="name">aem-selenium-basic-project.ui.apps</entry>
+<entry key="created">2017-04-17T16:47:13.834-0700</entry>
+<entry key="groupId">com.headwire</entry>
+<entry key="version">0.0.1-SNAPSHOT</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">my-packages</entry>
+<entry key="description">Maven Multimodule project for AEM Selenium Basic Project.</entry>
+<entry key="artifactId">aem-selenium-basic-project.ui.apps</entry>
+<entry key="path">/etc/packages/my-packages/aem-selenium-basic-project.ui.apps.zip</entry>
+</properties>

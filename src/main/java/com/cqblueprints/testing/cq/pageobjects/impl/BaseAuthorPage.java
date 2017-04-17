@@ -77,7 +77,8 @@ public class BaseAuthorPage extends BasePage implements AuthorPage {
 
 	public void toggleSidePanel() {
 		wait.until(ExpectedConditions.visibilityOf(sidePanelToggle));
-		sidePanelToggle.click();
+		//sidePanelToggle.click();\
+		sidePanelToggle.sendKeys(Keys.RETURN);
 	}
 
 	public boolean isClassic() {
@@ -125,11 +126,13 @@ public class BaseAuthorPage extends BasePage implements AuthorPage {
 	}
 
 	public void fillInDialogFieldByName(String name, String text) {
+		System.out.println("Filling in "+ name + " field with text " + text);
 		int maxRetries = 5;
 		int retries = 0;
 		String inputString = "";
 		try {
 			while (!inputString.equals(text) && retries < maxRetries) {
+				System.out.println("Try " + (retries + 1) + "/" + maxRetries);
 				By fieldBy = By.name(name);
 				wait.until(ExpectedConditions.presenceOfElementLocated(fieldBy));
 				List<WebElement> fields = driver.findElements(fieldBy);
@@ -146,7 +149,9 @@ public class BaseAuthorPage extends BasePage implements AuthorPage {
 				field.sendKeys(Keys.BACK_SPACE);
 				field.sendKeys(""+text.charAt(text.length()-1));
 				retries++;
+				System.out.println("Sleeping 500ms");
 				Thread.sleep(500);
+				System.out.println("Slept 500ms");
 				inputString = field.getAttribute("value");
 			}
 			if (retries >= maxRetries) {
@@ -616,12 +621,14 @@ public class BaseAuthorPage extends BasePage implements AuthorPage {
 	public void switchToContent() {
 		try {
 		if (driver.getCurrentUrl().contains(AEM_EDITOR)) {
+			WebElement el = driver.findElement(By.id("ContentFrame"));
 			driver.switchTo().frame(driver.findElement(By.id("ContentFrame")));
 		} else {
 			switchToClassicContent();
 		}
 		} catch (Exception e) {
 			// No content frame
+			e.printStackTrace();
 		}
 	}
 

@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -21,6 +22,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 
@@ -102,7 +104,13 @@ public class TestBase {
 				driverPath = driverPath + "chromedriver-linux";
 			}
 			System.setProperty("webdriver.chrome.driver", driverPath);
-			
+
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("disable-extensions");
+			options.addArguments("disable-infobars");
+			//capabilities.setCapability("chrome.switches", Arrays.asList("--disable-extensions"));
+			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
 			driver = new ChromeDriver(capabilities);
 		} else if (browser.equalsIgnoreCase("ie")) {
 			String os = System.getProperty("os.name"); 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/aem-selenium-basic-project"
+        cq:lastModified="{Date}2017-04-17T15:42:41.180-07:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/aem-selenium-basic-project/templates/basic"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Manual Test Page"
+        sling:resourceType="aem-selenium-basic-project/components/page/basic">
+        <par
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/parsys">
+            <title
+                jcr:created="{Date}2017-04-11T14:48:51.454-07:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2017-04-13T19:00:58.934-07:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Hello, World!"
+                sling:resourceType="wcm/foundation/components/title"/>
+            <text
+                jcr:created="{Date}2017-04-12T15:14:54.636-07:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2017-04-12T15:14:54.636-07:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceSuperType="foundation/components/form/defaults/field"
+                sling:resourceType="foundation/components/form/text"/>
+            <list
+                jcr:created="{Date}2017-04-12T15:50:13.454-07:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2017-04-12T15:50:13.454-07:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/list"/>
+            <testing_component
+                jcr:created="{Date}2017-04-17T15:37:47.222-07:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2017-04-17T15:42:41.178-07:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="aem-selenium-basic-project/components/content/testing-component"
+                firstText="Hello"
+                secondText="World"/>
+        </par>
+    </jcr:content>
+</jcr:root>

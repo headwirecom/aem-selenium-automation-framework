@@ -13,9 +13,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -119,7 +117,14 @@ public enum BaseActions {
 			js.executeScript(fullJSString);*/ 
 			// Native JS DnD
 			DragAndDropHelper.html5_DragAndDrop(driver, source, target, Position.Center, Position.Center);
+			System.out.println(target);
+			System.out.println(target.getLocation());
 			target.click();
+			//org.openqa.selenium.Point targetLoc = target.getLocation();
+
+//			Actions builder = new Actions(driver);
+//			builder.moveToElement(target, 10, 10).click().build().perform();
+
 		} else {
 			Actions builder = new Actions(driver);
 			Action dragDrop = builder.clickAndHold(source)

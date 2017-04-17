@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="aem-selenium-basic-project.core" />
+        <module name="aem-selenium-basic-project.ui.apps" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="aem-selenium-basic-project" target="1.5" />
+      <module name="aem-selenium-basic-project.core" target="1.7" />
+      <module name="aem-selenium-basic-project.ui.apps" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

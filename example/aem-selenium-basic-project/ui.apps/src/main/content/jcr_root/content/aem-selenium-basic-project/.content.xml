@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:allowedTemplates="[/apps/aem-selenium-basic-project/templates/.*]"
+        cq:designPath="[/etc/designs/aem-selenium-basic-project]"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="AEM Selenium Basic Project"
+        sling:resourceType="foundation/components/redirect"/>
+    <test-page/>
+    <manual-test-page/>
+</jcr:root>
